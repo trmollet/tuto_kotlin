@@ -4,21 +4,42 @@ import util.TODO
 import util.doc6
 
 fun todoTask6(): Nothing = TODO(
-    """
+        """
         Convert 'JavaCode6.Person' class to Kotlin.
         Then add a modifier `data` to the resulting class.
         This annotation means the compiler will generate a bunch of useful methods in this class:
         `equals`/`hashCode`, `toString` and some others.
         The `task6` function should return a list of persons.
     """,
-    documentation = doc6(),
-    references = { JavaCode6.Person("Alice", 29) }
+        documentation = doc6(),
+        references = { JavaCode6.Person("Alice", 29) }
 )
 
-class Person
 
 fun task6(): List<Person> {
-    todoTask6()
-    return listOf(/*Person("Alice", 29), Person("Bob", 31)*/)
+    return listOf(Person("Alice", 29), Person("Bob", 31))
 }
 
+class Person(val name: String, val age: Int) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Person
+
+        if (name != other.name) return false
+        if (age != other.age) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + age
+        return result
+    }
+
+    override fun toString(): String {
+        return "Person(name=$name, age=$age)"
+    }
+}
